@@ -5,7 +5,7 @@ Project of our team aimed at simplifying interaction with crypto world - trading
 
 # Particular function
 
-- The bot provides a list of information about courses and changes according to a given timer or at the request of the user.
+- The bot provides a list of information about prices and changes according to a given timer or at the request of the user.
 
 - The bot also sends notifications if some parameters have reached a certain level set by the user
 
