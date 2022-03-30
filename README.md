@@ -18,8 +18,10 @@ Project of our team aimed at simplifying interaction with crypto world - trading
 # Dependencies
 
 - Coinmarketcap API
-- Python-telegram-bot
+- BSCScan API
+- python-telegram-bot
 - Json
+- requests
 
 # FAQ
 
