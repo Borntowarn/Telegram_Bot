@@ -1,3 +1,4 @@
 Python >= 3.6
 CoinMarketCap API
+BSCScan API
 python-telegram-bot 13.11
