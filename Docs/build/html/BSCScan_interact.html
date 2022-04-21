@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="ru" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Поиск &mdash; документация Telegram Crypto Bot 1.0.0</title>
+  <title>3. Interaction with BSCScan API &mdash; документация Telegram Crypto Bot 1.0.0</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -17,10 +17,9 @@
         <script src="_static/doctools.js"></script>
         <script src="_static/translations.js"></script>
     <script src="_static/js/theme.js"></script>
-    <script src="_static/searchtools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Алфавитный указатель" href="genindex.html" />
-    <link rel="search" title="Поиск" href="#" /> 
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="prev" title="2. Interaction with Coinmarketcap API" href="CMC_interact.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -31,17 +30,17 @@
             <a href="index.html" class="icon icon-home"> Telegram Crypto Bot
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Поиск в документации" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Bot.html">1. Interaction with Telegram bot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CMC_interact.html">2. Interaction with Coinmarketcap API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="BSCScan_interact.html">3. Interaction with BSCScan API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. Interaction with BSCScan API</a></li>
 </ul>
 
         </div>
@@ -58,8 +57,9 @@
           <div role="navigation" aria-label="Навигация по страницам">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Поиск</li>
+      <li><span class="section-number">3. </span>Interaction with BSCScan API</li>
       <li class="wy-breadcrumbs-aside">
+            <a href="_sources/BSCScan_interact.rst.txt" rel="nofollow"> Просмотреть исходный код страницы</a>
       </li>
   </ul>
   <hr/>
@@ -67,22 +67,37 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Активируйте JavaScript, чтобы использовать функционал поиска.
-    </p>
-  </div>
-  </noscript>
+  <section id="module-BSCScan_interact">
+<span id="interaction-with-bscscan-api"></span><h1><span class="section-number">3. </span>Interaction with BSCScan API<a class="headerlink" href="#module-BSCScan_interact" title="Ссылка на этот заголовок"></a></h1>
+<p>Взаимодействие с API сайта BSCScan для отслеживания кошельков</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="BSCScan_interact.a">
+<span class="sig-prename descclassname"><span class="pre">BSCScan_interact.</span></span><span class="sig-name descname"><span class="pre">a</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BSCScan_interact.a" title="Ссылка на это определение"></a></dt>
+<dd><p>This function does something.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str.</em>) – The name to use.</p></li>
+<li><p><strong>state</strong> (<em>bool.</em>) – Current state to be in.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>int – the return code.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>AttributeError, KeyError</p>
+</dd>
+</dl>
+</dd></dl>
 
-  
-  <div id="search-results">
-  
-  </div>
+</section>
+
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="CMC_interact.html" class="btn btn-neutral float-left" title="2. Interaction with Coinmarketcap API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+    </div>
 
   <hr/>
 
@@ -104,14 +119,7 @@
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-  <script>
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script id="searchindexloader"></script>
-   
-
+  </script> 
 
 </body>
 </html>

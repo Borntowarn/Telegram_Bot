@@ -6,26 +6,23 @@
 Welcome to Telegram Crypto Bot's documentation!
 ===============================================
 
-Оглавление:
+Guides and tutorials
+====================
+
+1. Go to the Telegram (or go to the direct `link <https://t.me/CryptoHeIper_bot>`_)
+2. Search CryptoHeIper_bot in bar
+3. Start work with it
+
+Contents:
+-----------
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :numbered:
 
-.. automodule:: Bot
-   :members:
-
-   .. autofunction:: start
-      :members:
-
-.. automodule:: CMC_interact
-      :members:
-
-.. automodule:: BSCScan_interact
-      :members:
-
-   .. autofunction:: a
-      :members:
+   Bot
+   CMC_interact
+   BSCScan_interact
 
 ==================
 
