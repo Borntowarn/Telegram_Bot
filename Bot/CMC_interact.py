@@ -8,12 +8,17 @@ import json
 
 
 token = '9273b9b2-6158-428f-afd4-379f3c3992de'
+url = 'https://pro-api.coinmarketcap.com'
 
-url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/map'
+urls = {
+  'map': f'{url}/v1/cryptocurrency/map',
+  'latestData': f'{url}/v2/cryptocurrency/quotes/latest',
+  'newListings': f'{url}/v1/cryptocurrency/listings/new',
+  'airdrops': f'{url}/v1/cryptocurrency/airdrops'
+  }
 
 parameters = {
-  'start':'1',
-  'limit':'2',
+  'slug': 'bitcoin'
 }
 
 headers = {
@@ -25,8 +30,8 @@ session = Session()
 session.headers.update(headers)
 
 try:
-  response = session.get(url, params=parameters)
+  response = session.get(urls['latestData'], params=parameters)
   data = json.loads(response.text)
-  print(data)
+  print(data['data'])
 except (ConnectionError, Timeout, TooManyRedirects) as e:
   print(e)
