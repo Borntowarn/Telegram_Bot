@@ -1,27 +1,32 @@
-"""
-.. module:: Bot
-    :platform: Any
-    :synopsis: Module for interraction with Telegram bot
-
-"""
+"""This module contains an object that represents a Telegram Bot."""
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 
-token = '5175481555:AAEp0UQJs1nWZxFQonsFvHDktGfHPZewwq0'
-
-
-def start(update, context):
+class Bot:
+    """_summary_
     """
-    Обработка кнопки "Старт" в чате с ботом
-    """
-    chat = update.effective_chat
-    context.bot.send_message(chat_id=chat.id, text="Привет, я крипто бот")
     
-updater = Updater(token, use_context=True)
+    token = '5175481555:AAEp0UQJs1nWZxFQonsFvHDktGfHPZewwq0'
+    
+    
+    def __init__(self):
+        updater = Updater(self.token, use_context=True)
 
-dispatcher = updater.dispatcher
-dispatcher.add_handler(CommandHandler("start", start))
+        dispatcher = updater.dispatcher
+        dispatcher.add_handler(CommandHandler("start", self.start))
 
-updater.start_polling()
-updater.idle()
+        updater.start_polling()
+        updater.idle()
+
+
+    def start(self, update, context):
+        """
+        Обработка кнопки "Старт" в чате с ботомd
+        """
+        chat = update.effective_chat
+        context.bot.send_message(chat_id=chat.id, text="Привет, я крипто бот")
+
+def b():
+    """_summary_
+    """

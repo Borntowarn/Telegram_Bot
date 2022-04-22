@@ -1,5 +1,5 @@
 Interaction with BSCScan API 
 ============================
 
-.. automodule:: BSCScan_interact
+.. autoclass:: Bot.BSCScan_API
     :members:

@@ -14,7 +14,7 @@ import os
 import sys
 
 import sphinx
-sys.path.insert(0, os.path.abspath('..\..\Bot'))
+sys.path.insert(0, os.path.abspath('..\..'))
 
 
 # -- Project information -----------------------------------------------------
