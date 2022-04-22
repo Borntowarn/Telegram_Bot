@@ -1,5 +1,6 @@
 Interaction with Coinmarketcap API 
 ==================================
 
-.. automodule:: CMC_interact
+.. autoclass:: Bot.CMC_API
     :members:
+    :show-inheritance:

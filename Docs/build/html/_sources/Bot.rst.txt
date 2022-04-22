@@ -1,5 +1,5 @@
 Interaction with Telegram bot
 =============================
 
-.. automodule:: Bot
+.. automodule:: Bot.Bot
     :members:

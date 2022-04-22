@@ -54,7 +54,7 @@
       </nav>
 
       <div class="wy-nav-content">
-        <div class="rst-content">
+        <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Навигация по страницам">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
@@ -68,9 +68,89 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-CMC_interact">
-<span id="interaction-with-coinmarketcap-api"></span><h1><span class="section-number">2. </span>Interaction with Coinmarketcap API<a class="headerlink" href="#module-CMC_interact" title="Ссылка на этот заголовок"></a></h1>
-<p>Взаимодействие с API сайта CoinMarketCap</p>
+  <section id="interaction-with-coinmarketcap-api">
+<h1><span class="section-number">2. </span>Interaction with Coinmarketcap API<a class="headerlink" href="#interaction-with-coinmarketcap-api" title="Ссылка на этот заголовок"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="Bot.CMC_API">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Bot.</span></span><span class="sig-name descname"><span class="pre">CMC_API</span></span><a class="headerlink" href="#Bot.CMC_API" title="Ссылка на это определение"></a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</div></blockquote>
+<p>This object represents a CoinMarketCap interaction.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Bot.CMC_API.get_CMC_id">
+<span class="sig-name descname"><span class="pre">get_CMC_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bot.CMC_API.get_CMC_id" title="Ссылка на это определение"></a></dt>
+<dd><p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>symbols</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Comma-separated list of symbols of cryptocurrencies to check.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>Comma-separated list of ids of cryptocurrencies to check.</p>
+</dd>
+<dt class="field-odd">Тип результата</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Bot.CMC_API.get_price_change">
+<span class="sig-name descname"><span class="pre">get_price_change</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1h'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'USD'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bot.CMC_API.get_price_change" title="Ссылка на это определение"></a></dt>
+<dd><p>Method returns price changings for a setted period</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbols</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Comma-separated list
+of symbols of cryptocurrencies to check.</p></li>
+<li><p><strong>period</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – Price changing period. Defaults to „1h“.</p></li>
+<li><p><strong>convert</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – Comma-separated list
+of symbols of crypto(currencies) for converting. Defaults to „USD“.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Map where keys are symbols of token</dt><dd><p>value is a map where
+link is a CMC token link
+price is a tuple of currency, current price and percent change for the period.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Тип результата</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">map</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Bot.CMC_API.get_stat">
+<span class="sig-name descname"><span class="pre">get_stat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'USD'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bot.CMC_API.get_stat" title="Ссылка на это определение"></a></dt>
+<dd><p>Function returns all statistics for needed cryptocurrencies</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbols</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Comma-separated list
+of symbols of cryptocurrencies to check.</p></li>
+<li><p><strong>convert</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – Comma-separated list
+of symbols of crypto(currencies) for conversion. Defaults to „USD“.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A map of cryptocurrency objects</dt><dd><p>by ID, symbol, or slug (as used in query parameters)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Тип результата</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">map</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
