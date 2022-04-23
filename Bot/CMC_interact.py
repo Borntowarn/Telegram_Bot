@@ -36,13 +36,12 @@ class CMC_API:
         for item in ID:
             self.ID_to_SYM[item['id']] = item['symbol']
             if item['symbol'] in self.SYM_to_ID.keys():
-                self.SYM_to_ID[item['symbol']] = [self.SYM_to_ID[item['symbol']]]
+                if isinstance(self.SYM_to_ID[item['symbol']], int):
+                    self.SYM_to_ID[item['symbol']] = [self.SYM_to_ID[item['symbol']]]
                 self.SYM_to_ID[item['symbol']].append(item['id'])
             else: 
                 self.SYM_to_ID[item['symbol']] = item['id']
-            
-            
-        
+
 
     def get_price_change(self, symbols, period='1h', convert='USD'):
         """
@@ -60,24 +59,30 @@ class CMC_API:
                 of symbols of crypto(currencies) for converting. Defaults to 'USD'.
 
         Returns:
-            :obj:`map`: Map where
+            :obj:`map`: A map where:
                 :obj:`keys`: Symbols of token.
                 
-                :obj:`values`: A maps where.
+                :obj:`values`: Maps where:
                 
                     :obj:`link`: A CMC token link.
                 
-                    :obj:`price`: A map where.
+                    :obj:`price`: A map where:
+                    
+                        :obj:`keys`: Symbols of crypto(currency).
                 
-                        :obj:`symbol`: A symbol for converting of currency.
+                        :obj:`values`: Maps where:
                 
-                        :obj:`price`: A current price.
+                            :obj:`price`: Current price.
                 
-                        :obj:`percent change`: A list of changes for setted periods.
+                            :obj:`changes`: A map where:
+                            
+                                :obj:`keys`: Period.
+                
+                                :obj:`values`: Changes.
 
         """
         try:
-            data = self.get_stat(symbols, convert) #
+            data = self.get_stat(symbols, convert)
         except (ConnectionError, Timeout, TooManyRedirects) as e:
             return(e)
 
@@ -87,7 +92,7 @@ class CMC_API:
             prices[item['symbol']] = {
                 'link': item['link'],
                 'price': {
-                    self.ID_to_SYM[int(quote)]:
+                    quote:
                         {
                         'price': price['price'], 
                         'changes': {period: price[f'percent_change_{period}'] for period in periods}
@@ -98,11 +103,111 @@ class CMC_API:
         return prices
     
     
-    def get_volume(self, symbols, convert='USD'):
-        pass
-        
-        
+    def get_market_pairs(self, symbols):
+        """
+        Method returns CMC number of market pairs for setted cryptocurrencies
 
+        Args:
+            symbols (:obj:`str`): Comma-separated list
+                of symbols of cryptocurrencies to check.
+
+        Returns:
+            :obj:`map`: A map where:
+            
+                :obj:`keys`: Symbols of token.
+                
+                :obj:`values`: Maps where:
+                
+                    :obj:`link`: A CMC token link.
+                
+                    :obj:`pairs`: Number of pairs.
+
+        """
+        try:
+            data = self.get_stat(symbols)
+        except (ConnectionError, Timeout, TooManyRedirects) as e:
+            return(e)
+        
+        pairs = {}
+        for key, item in data.items():
+            pairs[item['symbol']] = {
+                'link': item['link'],
+                'pairs': item['num_market_pairs']
+            }
+        return pairs
+        
+     
+    def get_CMC_rank(self, symbols):
+        """
+        Method returns CMC ranks for setted cryptocurrencies
+
+        Args:
+            symbols (:obj:`str`): Comma-separated list
+                of symbols of cryptocurrencies to check.
+
+        Returns:
+            :obj:`map`: A map where:
+            
+                :obj:`keys`: Symbols of token.
+                
+                :obj:`values`: Maps where:
+                
+                    :obj:`link`: A CMC token link.
+                
+                    :obj:`rank`: Rank.
+
+        """
+        try:
+            data = self.get_stat(symbols)
+        except (ConnectionError, Timeout, TooManyRedirects) as e:
+            return(e)
+        
+        ranks = {}
+        for key, item in data.items():
+            ranks[item['symbol']] = {
+                'link': item['link'],
+                'rank': item['cmc_rank']
+            }
+        return ranks
+       
+    
+    def get_volume(self, symbols):
+        """
+        Method returns value and changings for a setted period
+
+        Args:
+            symbols (:obj:`str`): Comma-separated list
+                of symbols of cryptocurrencies to check.
+
+        Returns:
+            :obj:`map`: A map where:
+            
+                :obj:`keys`: Symbols of token.
+                
+                :obj:`values`: Maps where:
+                
+                    :obj:`link`: A CMC token link.
+                
+                    :obj:`volume`: Trading volume.
+                    
+                    :obj:`changes`: Volume changes for 24h.
+        """
+        
+        try:
+            data = self.get_stat(symbols)
+        except (ConnectionError, Timeout, TooManyRedirects) as e:
+            return(e)
+        
+        volumes = {}
+        for key, item in data.items():
+            volumes[item['symbol']] = {
+                'link': item['link'],
+                'volume': item['quote']['USD']['volume_24h'], 
+                'changes': item['quote']['USD']['volume_change_24h']
+            }
+        return volumes
+        
+        
     def get_stat(self, symbols, convert='USD'):
         """
         Function returns all statistics for needed cryptocurrencies
@@ -114,22 +219,21 @@ class CMC_API:
                 of symbols of crypto(currencies) for conversion. Defaults to 'USD'.
         
         Returns:
-            :obj:`map`: A map of stat of cryptocurrency objects
-                by ID, symbol, or slug (as used in query parameters)
+            :obj:`map`: A map of stat of cryptocurrency objects by symbol
         """
         
         #Получение CMC id для валют конвертации
-        try:
-            ids = self.get_CMC_id(convert)
-        except (ConnectionError, Timeout, TooManyRedirects) as e:
-            return(e)
+        # try:
+        #     ids = self.get_CMC_id(convert)
+        # except (ConnectionError, Timeout, TooManyRedirects) as e:
+        #     return(e)
         
         #Разделяем параметры конвертации для того, чтобы запросы проходили обработку
         #так как наш план API поддерживает только одну валюту для конвертации
         parameters = [{
-          'symbol': symbols,
-          'convert_id': i
-        } for i in ids.split(',')]
+          'symbol': symbols.replace(' ', ''),
+          'convert': i.strip()
+        } for i in convert.split(',')]
         
         
         #Отправляем по запросу на каждую валюту конвертации и после
@@ -166,3 +270,6 @@ class CMC_API:
         symbols = [i.strip().upper() for i in symbols.split(',')]
         ids = [str(self.SYM_to_ID[i]) for i in symbols]
         return ','.join(ids)
+
+a = CMC_API()
+a.get_price_change('krw', '1h, 24h', 'usd, bnb')
