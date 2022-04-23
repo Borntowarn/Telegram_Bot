@@ -80,7 +80,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="Bot.CMC_API.get_CMC_id">
 <span class="sig-name descname"><span class="pre">get_CMC_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bot.CMC_API.get_CMC_id" title="Ссылка на это определение"></a></dt>
-<dd><p>_summary_</p>
+<dd><p>Method returns CMC’s ids for symbols of currencies</p>
 <dl class="field-list simple">
 <dt class="field-odd">Параметры</dt>
 <dd class="field-odd"><p><strong>symbols</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Comma-separated list of symbols of cryptocurrencies to check.</p>
@@ -103,16 +103,26 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>symbols</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Comma-separated list
 of symbols of cryptocurrencies to check.</p></li>
-<li><p><strong>period</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – Price changing period. Defaults to „1h“.</p></li>
+<li><p><strong>period</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – Comma-separated list
+of periods of periods to check. Can be „1h“, „24h“, „7d“, „30d“.
+Defaults to „1h“.</p></li>
 <li><p><strong>convert</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – Comma-separated list
 of symbols of crypto(currencies) for converting. Defaults to „USD“.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Результат</dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>Map where keys are symbols of token</dt><dd><p>value is a map where
-link is a CMC token link
-price is a tuple of currency, current price and percent change for the period.</p>
+<dd class="field-even"><p><dl>
+<dt>Map where</dt><dd><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code>: Symbols of token.</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code>: A maps where.</p>
+<blockquote>
+<div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">link</span></code>: A CMC token link.</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">price</span></code>: A map where.</p>
+<blockquote>
+<div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">symbol</span></code>: A symbol for converting of currency.</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">price</span></code>: A current price.</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">percent</span> <span class="pre">change</span></code>: A list of changes for setted periods.</p>
+</div></blockquote>
+</div></blockquote>
 </dd>
 </dl>
 </p>
@@ -138,7 +148,7 @@ of symbols of crypto(currencies) for conversion. Defaults to „USD“.</p></li>
 </dd>
 <dt class="field-even">Результат</dt>
 <dd class="field-even"><p><dl class="simple">
-<dt>A map of cryptocurrency objects</dt><dd><p>by ID, symbol, or slug (as used in query parameters)</p>
+<dt>A map of stat of cryptocurrency objects</dt><dd><p>by ID, symbol, or slug (as used in query parameters)</p>
 </dd>
 </dl>
 </p>

@@ -28,8 +28,8 @@ class CMC_API:
         except (ConnectionError, Timeout, TooManyRedirects) as e:
             return(e)
         
-        self.ID_to_SYM = {}
-        self.SYM_to_ID = {}
+        self.ID_to_SYM = {} #Таблица соответствия CMC id и символа
+        self.SYM_to_ID = {} #Таблица соответствия символа и CMC id
         ID = json.loads(response_fiat.text)['data']
         crypto_ID = json.loads(response_crypto.text)['data']
         ID.extend(crypto_ID)
@@ -52,36 +52,54 @@ class CMC_API:
             symbols (:obj:`str`): Comma-separated list
                 of symbols of cryptocurrencies to check.
             
-            period (:obj:`str`, optional): Price changing period. Defaults to '1h'.
+            period (:obj:`str`, optional): Comma-separated list
+                of periods of periods to check. Can be '1h', '24h', '7d', '30d'.
+                Defaults to '1h'.
             
             convert (:obj:`str`, optional): Comma-separated list
                 of symbols of crypto(currencies) for converting. Defaults to 'USD'.
 
         Returns:
-            :obj:`map`: Map where keys are symbols of token 
-                value is a map where
-                link is a CMC token link
-                price is a tuple of currency, current price and percent change for the period.
+            :obj:`map`: Map where
+                :obj:`keys`: Symbols of token.
+                
+                :obj:`values`: A maps where.
+                
+                    :obj:`link`: A CMC token link.
+                
+                    :obj:`price`: A map where.
+                
+                        :obj:`symbol`: A symbol for converting of currency.
+                
+                        :obj:`price`: A current price.
+                
+                        :obj:`percent change`: A list of changes for setted periods.
 
         """
         try:
-            data = self.get_stat(symbols, convert)
+            data = self.get_stat(symbols, convert) #
         except (ConnectionError, Timeout, TooManyRedirects) as e:
             return(e)
 
+        periods = [i.strip() for i in period.split(',')]
         prices = {}
         for key, item in data.items():
             prices[item['symbol']] = {
                 'link': item['link'],
-                'price': [
-                    (
-                    self.ID_to_SYM[int(quote)], 
-                    price['price'], 
-                    price[f'percent_change_{period}']
-                    ) 
-                    for quote, price in item['quote'].items()]
+                'price': {
+                    self.ID_to_SYM[int(quote)]:
+                        {
+                        'price': price['price'], 
+                        'changes': {period: price[f'percent_change_{period}'] for period in periods}
+                        }
+                    for quote, price in item['quote'].items()
+                }
             }
         return prices
+    
+    
+    def get_volume(self, symbols, convert='USD'):
+        pass
         
         
 
@@ -96,30 +114,46 @@ class CMC_API:
                 of symbols of crypto(currencies) for conversion. Defaults to 'USD'.
         
         Returns:
-            :obj:`map`: A map of cryptocurrency objects
+            :obj:`map`: A map of stat of cryptocurrency objects
                 by ID, symbol, or slug (as used in query parameters)
         """
+        
+        #Получение CMC id для валют конвертации
         try:
             ids = self.get_CMC_id(convert)
         except (ConnectionError, Timeout, TooManyRedirects) as e:
             return(e)
         
-        parameters = {
+        #Разделяем параметры конвертации для того, чтобы запросы проходили обработку
+        #так как наш план API поддерживает только одну валюту для конвертации
+        parameters = [{
           'symbol': symbols,
-          'convert_id': ids
-        }
+          'convert_id': i
+        } for i in ids.split(',')]
         
-        data = {}
-        response = self.session.get(self.urls['latestData'], params=parameters)
-        for key, value in json.loads(response.text)['data'].items():
-            data[key] = value[0]
+        
+        #Отправляем по запросу на каждую валюту конвертации и после
+        #этого объединяем запросы в один со всеми валютами конвертации
+        responses = []
+        for parameter in parameters:
+            response = self.session.get(self.urls['latestData'], params=parameter)
+            responses.append(json.loads(response.text)['data'])
+        for key, value in responses[0].items():
+            responses[0][key] = value[0]
+        for response in responses[1:]:
+            for key, item in response.items():
+                responses[0][key]['quote'].update(item[0]['quote'])
+        data = responses[0]
+        
+        #Добавление ссылок на страницу валюты в CMC
         for key, value in data.items():
             data[key]['link'] = 'https://coinmarketcap.com/currencies/' + data[key]['slug']
         return data
 
     
     def get_CMC_id(self, symbols):
-        """_summary_
+        """
+        Method returns CMC's ids for symbols of currencies
 
         Args:
             symbols (:obj:`str`): Comma-separated list of symbols of cryptocurrencies to check.
