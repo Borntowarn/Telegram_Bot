@@ -28,5 +28,5 @@ class Bot:
         context.bot.send_message(chat_id=chat.id, text="Привет, я крипто бот")
 
 def b():
-    """_summary_
+    """_sum875785mary_
     """
