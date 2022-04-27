@@ -27,6 +27,9 @@ class Bot:
         chat = update.effective_chat
         context.bot.send_message(chat_id=chat.id, text="Привет, я крипто бот")
 
+    def danya():
+        pass
+
 def b():
     """_summary_
     """
