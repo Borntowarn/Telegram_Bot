@@ -35,7 +35,7 @@ class Bot:
         Обработка команды "Help"
         """
         chat = update.effective_chat
-        context.bot.send_message(chat_id=chat.id, text="Список команд:\n/id\n/volume")
+        context.bot.send_message(chat_id=chat.id, text="Список команд:\n/id")
 
 
     def id(self, update, context):
@@ -44,7 +44,7 @@ class Bot:
         """
         chat = update.effective_chat
         symb = ' '.join(context.args)
-        context.bot.send_message(chat_id=chat.id, text=symb.upper + cmc.get_CMC_id(cmc(), symb))
+        context.bot.send_message(chat_id=chat.id, text=cmc.get_CMC_id(cmc(), symb))
 
 
 def b():
