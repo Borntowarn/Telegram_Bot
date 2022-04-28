@@ -1,7 +1,7 @@
 """This module contains an object that represents a Telegram Bot."""
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from CMC_interact import CMC_API as cmc
+from .CMC_interact import CMC_API as cmc
 
 
 class Bot:

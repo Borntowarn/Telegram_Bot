@@ -210,7 +210,7 @@ class CMC_API:
         
     def get_stat(self, symbols, convert='USD'):
         """
-        Function returns all statistics for needed cryptocurrencies
+        Function returns full statistics for needed cryptocurrencies
 
         Args:
             symbols (:obj:`str`): Comma-separated list
@@ -219,7 +219,8 @@ class CMC_API:
                 of symbols of crypto(currencies) for conversion. Defaults to 'USD'.
         
         Returns:
-            :obj:`map`: A map of stat of cryptocurrency objects by symbol
+            :obj:`map`: A map of full stat of cryptocurrency objects by symbol.
+                Keys for map you can look `here <https://coinmarketcap.com/api/documentation/v1/#operation/getV2CryptocurrencyQuotesLatest>`_
         """
         
         #Получение CMC id для валют конвертации
@@ -270,6 +271,3 @@ class CMC_API:
         symbols = [i.strip().upper() for i in symbols.split(',')]
         ids = [str(self.SYM_to_ID[i]) for i in symbols]
         return ','.join(ids)
-
-a = CMC_API()
-a.get_price_change('krw', '1h, 24h', 'usd, bnb')
