@@ -65,6 +65,8 @@ class CMC_API:
                 :obj:`values`: Maps where:
                 
                     :obj:`link`: A CMC token link.
+                    
+                    :obj:`name`: A full name of token.
                 
                     :obj:`price`: A map where:
                     
@@ -91,6 +93,7 @@ class CMC_API:
         for key, item in data.items():
             prices[item['symbol']] = {
                 'link': item['link'],
+                'name': item['name'],
                 'price': {
                     quote:
                         {
@@ -119,6 +122,8 @@ class CMC_API:
                 :obj:`values`: Maps where:
                 
                     :obj:`link`: A CMC token link.
+                    
+                    :obj:`name`: A full name of token.
                 
                     :obj:`pairs`: Number of pairs.
 
@@ -132,6 +137,7 @@ class CMC_API:
         for key, item in data.items():
             pairs[item['symbol']] = {
                 'link': item['link'],
+                'name': item['name'],
                 'pairs': item['num_market_pairs']
             }
         return pairs
@@ -153,6 +159,8 @@ class CMC_API:
                 :obj:`values`: Maps where:
                 
                     :obj:`link`: A CMC token link.
+                    
+                    :obj:`name`: A full name of token.
                 
                     :obj:`rank`: Rank.
 
@@ -166,6 +174,7 @@ class CMC_API:
         for key, item in data.items():
             ranks[item['symbol']] = {
                 'link': item['link'],
+                'name': item['name'],
                 'rank': item['cmc_rank']
             }
         return ranks
@@ -187,6 +196,8 @@ class CMC_API:
                 :obj:`values`: Maps where:
                 
                     :obj:`link`: A CMC token link.
+                    
+                    :obj:`name`: A full name of token.
                 
                     :obj:`volume`: Trading volume.
                     
@@ -202,6 +213,7 @@ class CMC_API:
         for key, item in data.items():
             volumes[item['symbol']] = {
                 'link': item['link'],
+                'name': item['name'],
                 'volume': item['quote']['USD']['volume_24h'], 
                 'changes': item['quote']['USD']['volume_change_24h']
             }
@@ -222,12 +234,6 @@ class CMC_API:
             :obj:`map`: A map of full stat of cryptocurrency objects by symbol.
                 Keys for map you can look `here <https://coinmarketcap.com/api/documentation/v1/#operation/getV2CryptocurrencyQuotesLatest>`_
         """
-        
-        #Получение CMC id для валют конвертации
-        # try:
-        #     ids = self.get_CMC_id(convert)
-        # except (ConnectionError, Timeout, TooManyRedirects) as e:
-        #     return(e)
         
         #Разделяем параметры конвертации для того, чтобы запросы проходили обработку
         #так как наш план API поддерживает только одну валюту для конвертации
