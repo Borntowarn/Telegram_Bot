@@ -18,6 +18,7 @@ class Bot:
         dispatcher.add_handler(CommandHandler("help", self.help))
         dispatcher.add_handler(CommandHandler("btc", self.btc))
         dispatcher.add_handler(CommandHandler("stat", self.stat))
+        dispatcher.add_handler(CommandHandler("support", self.support))
 
         updater.start_polling()
         updater.idle()
@@ -28,7 +29,7 @@ class Bot:
         Обработка кнопки "start" в чате с ботом
         """
         chat = update.effective_chat
-        context.bot.send_message(chat_id=chat.id, text="Привет, я крипто бот")
+        context.bot.send_message(chat_id=chat.id, text="Привет, я крипто бот\n" + "Введи команду" + " /help" + ", чтобы получить информацию о доступных командах!")
 
 
     def help(self, update, context):
@@ -36,7 +37,11 @@ class Bot:
         Обработка команды "help"
         """
         chat = update.effective_chat
-        context.bot.send_message(chat_id=chat.id, text="Список команд:\n/id")
+        context.bot.send_message(chat_id=chat.id, text="Список доступных команд:\n" + 
+                                                        "/btc" + " - полная статистика по BTC\n" +
+                                                        "/stat" + " + название токена - полная статистика по введенному токену\n" +
+                                                        "/support" + " - техническая поддержка бота\n" +
+                                                        "/help" + " - список доступных команд")
 
     
     def support(self, update, context):
@@ -62,8 +67,8 @@ class Bot:
         volume = volumes['BTC']['volume']
         changes = volumes['BTC']['changes']
 
-        context.bot.send_message(chat_id=chat.id, text="Bitcoin | BTC\n" + "Link: " + str(link) + "\nUSD: $" + str(USD) + 
-        "\nPrice change:" + "\n1h: $" + str(h_1) + "\n24h: $" + str(h_24) + "\nMarket Cap: $" + str(volume) + "\n24h Volume: $" + str(changes))
+        context.bot.send_message(chat_id=chat.id, text="Bitcoin | BTC" + '\n\n' + "Link: " + str(link) + "\n\nUSD: $" + str(USD) + 
+        "\n\nPrice change:" + "\n1h: " + str(h_1) + "%" + "\n24h: " + str(h_24) + "%" + "\nMarket Cap: $" + str(volume) + "\n24h Volume: $" + str(changes))
 
 
     def stat(self, update, context):
@@ -71,19 +76,24 @@ class Bot:
         Обработка команды получения данных по введенному токену
         """
         chat = update.effective_chat
-        symb = (' '.join(context.args)).upper()
-        prices = cmc.get_price_change(cmc(), symb, '1h, 24h')
+        try:
+            symb = (' '.join(context.args)).upper()
+            prices = cmc.get_price_change(cmc(), symb, '1h, 24h')
 
-        link = prices[symb]['link']
-        USD = prices[symb]['price']['USD']['price']
-        h_1 = prices[symb]['price']['USD']['changes']['1h']
-        h_24 = prices[symb]['price']['USD']['changes']['24h']
-        volumes = cmc.get_volume(cmc(), symb)
-        volume = volumes[symb]['volume']
-        changes = volumes[symb]['changes']
+            link = prices[symb]['link']
+            USD = prices[symb]['price']['USD']['price']
+            h_1 = prices[symb]['price']['USD']['changes']['1h']
+            h_24 = prices[symb]['price']['USD']['changes']['24h']
+            volumes = cmc.get_volume(cmc(), symb)
+            volume = volumes[symb]['volume']
+            changes = volumes[symb]['changes']
+            name = volumes[symb]['name']
+            full_name = name + " | " + symb
 
-        context.bot.send_message(chat_id=chat.id, text= symb + '\n' + "Link: " + str(link) + "\nUSD: $" + str(USD) + 
-        "\nPrice change:" + "\n1h: $" + str(h_1) + "\n24h: $" + str(h_24) + "\nMarket Cap: $" + str(volume) + "\n24h Volume: $" + str(changes))
+            context.bot.send_message(chat_id=chat.id, text= full_name + '\n\n' + "Link: " + str(link) + "\n\nUSD: $" + str(USD) + 
+            "\n\nPrice change:" + "\n1h: " + str(h_1) + "%" + "\n24h: " + str(h_24) + "%" + "\nMarket Cap: $" + str(volume) + "\n24h Volume: $" + str(changes))
+        except:
+            context.bot.send_message(chat_id=chat.id, text="Я не понимаю Ваш запрос, попробуйте снова!")
 
 
 a = Bot()
