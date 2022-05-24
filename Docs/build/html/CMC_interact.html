@@ -97,7 +97,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="Bot.CMC_API.get_CMC_rank">
 <span class="sig-name descname"><span class="pre">get_CMC_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bot.CMC_API.get_CMC_rank" title="Ссылка на это определение"></a></dt>
-<dd><p>Method returns CMC ranks for setted cryptos</p>
+<dd><p>Method returns CMC ranks for setted cryptocurrencies</p>
 <dl class="field-list simple">
 <dt class="field-odd">Параметры</dt>
 <dd class="field-odd"><p><strong>symbols</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Comma-separated list
@@ -110,6 +110,7 @@ of symbols of cryptocurrencies to check.</p>
 <p><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code>: Maps where:</p>
 <blockquote>
 <div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">link</span></code>: A CMC token link.</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code>: A full name of token.</p>
 <p><code class="xref py py-obj docutils literal notranslate"><span class="pre">rank</span></code>: Rank.</p>
 </div></blockquote>
 </div></blockquote>
@@ -124,7 +125,7 @@ of symbols of cryptocurrencies to check.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Bot.CMC_API.get_market_pairs">
 <span class="sig-name descname"><span class="pre">get_market_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bot.CMC_API.get_market_pairs" title="Ссылка на это определение"></a></dt>
-<dd><p>Method returns CMC number of market pairs for setted cryptos</p>
+<dd><p>Method returns CMC number of market pairs for setted cryptocurrencies</p>
 <dl class="field-list simple">
 <dt class="field-odd">Параметры</dt>
 <dd class="field-odd"><p><strong>symbols</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Comma-separated list
@@ -137,6 +138,7 @@ of symbols of cryptocurrencies to check.</p>
 <p><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code>: Maps where:</p>
 <blockquote>
 <div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">link</span></code>: A CMC token link.</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code>: A full name of token.</p>
 <p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pairs</span></code>: Number of pairs.</p>
 </div></blockquote>
 </div></blockquote>
@@ -170,6 +172,7 @@ of symbols of crypto(currencies) for converting. Defaults to „USD“.</p></li>
 <p><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code>: Maps where:</p>
 <blockquote>
 <div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">link</span></code>: A CMC token link.</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code>: A full name of token.</p>
 <p><code class="xref py py-obj docutils literal notranslate"><span class="pre">price</span></code>: A map where:</p>
 <blockquote>
 <div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code>: Symbols of crypto(currency).</p>
@@ -197,7 +200,7 @@ of symbols of crypto(currencies) for converting. Defaults to „USD“.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="Bot.CMC_API.get_stat">
 <span class="sig-name descname"><span class="pre">get_stat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'USD'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bot.CMC_API.get_stat" title="Ссылка на это определение"></a></dt>
-<dd><p>Function returns all statistics for needed cryptocurrencies</p>
+<dd><p>Function returns full statistics for needed cryptocurrencies</p>
 <dl class="field-list simple">
 <dt class="field-odd">Параметры</dt>
 <dd class="field-odd"><ul class="simple">
@@ -208,7 +211,11 @@ of symbols of crypto(currencies) for conversion. Defaults to „USD“.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Результат</dt>
-<dd class="field-even"><p>A map of stat of cryptocurrency objects by symbol</p>
+<dd class="field-even"><p><dl class="simple">
+<dt>A map of full stat of cryptocurrency objects by symbol.</dt><dd><p>Keys for map you can look <a class="reference external" href="https://coinmarketcap.com/api/documentation/v1/#operation/getV2CryptocurrencyQuotesLatest">here</a></p>
+</dd>
+</dl>
+</p>
 </dd>
 <dt class="field-odd">Тип результата</dt>
 <dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">map</span></code></p>
@@ -232,6 +239,7 @@ of symbols of cryptocurrencies to check.</p>
 <p><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code>: Maps where:</p>
 <blockquote>
 <div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">link</span></code>: A CMC token link.</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code>: A full name of token.</p>
 <p><code class="xref py py-obj docutils literal notranslate"><span class="pre">volume</span></code>: Trading volume.</p>
 <p><code class="xref py py-obj docutils literal notranslate"><span class="pre">changes</span></code>: Volume changes for 24h.</p>
 </div></blockquote>
