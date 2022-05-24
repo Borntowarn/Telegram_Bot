@@ -1,7 +1,5 @@
 """This module contains an object that represents a Telegram Bot."""
 
-#from telegram.ext import Updater, CommandHandler
-from email import message
 from CMC_interact import CMC_API as cmc
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.dispatcher.filters import Text
