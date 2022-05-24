@@ -66,7 +66,7 @@ async def send_help(call: types.CallbackQuery):
     keyboard = types.InlineKeyboardMarkup(row_width=1)
     keyboard.add(*buttons)
 
-    await message.answer("Список доступных команд:\n" + 
+    await call.message.answer("Список доступных команд:\n" + 
                         "/btc" + " - полная статистика по BTC\n" +
                         "/stat" + " + название токена - полная статистика по введенному токену\n" +
                         "/support" + " - техническая поддержка бота\n" +
