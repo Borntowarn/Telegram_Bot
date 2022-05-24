@@ -1,99 +1,110 @@
 """This module contains an object that represents a Telegram Bot."""
 
-from telegram.ext import Updater, CommandHandler
+#from telegram.ext import Updater, CommandHandler
+from email import message
 from CMC_interact import CMC_API as cmc
+from aiogram import Bot, Dispatcher, executor, types
+from aiogram.dispatcher.filters import Text
+import logging
 
 
-class Bot:
-    """_summary_
+"""_summary_
+"""
+
+tok = '5175481555:AAEp0UQJs1nWZxFQonsFvHDktGfHPZewwq0'
+bot = Bot(token = '5175481555:AAEp0UQJs1nWZxFQonsFvHDktGfHPZewwq0')
+dp = Dispatcher(bot)
+logging.basicConfig(level=logging.INFO)
+
+@dp.message_handler(commands="start")
+async def start(message: types.Message):
     """
-    
-    token = '5175481555:AAEp0UQJs1nWZxFQonsFvHDktGfHPZewwq0'
-    
-    def __init__(self):
-        updater = Updater(self.token, use_context=True)
-
-        dispatcher = updater.dispatcher
-        dispatcher.add_handler(CommandHandler("start", self.start))
-        dispatcher.add_handler(CommandHandler("help", self.help))
-        dispatcher.add_handler(CommandHandler("btc", self.btc))
-        dispatcher.add_handler(CommandHandler("stat", self.stat))
-        dispatcher.add_handler(CommandHandler("support", self.support))
-
-        updater.start_polling()
-        updater.idle()
+    Обработка кнопки "start" в чате с ботом
+    """
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    button = ["restart"]
+    keyboard.add(*button)
+    await message.answer("Привет, я крипто бот\n" + "Введи команду" + " /help" + ", чтобы получить информацию о доступных командах!", reply_markup=keyboard)
 
 
-    def start(self, update, context):
-        """
-        Обработка кнопки "start" в чате с ботом
-        """
-        chat = update.effective_chat
-        context.bot.send_message(chat_id=chat.id, text="Привет, я крипто бот\n" + "Введи команду" + " /help" + ", чтобы получить информацию о доступных командах!")
+@dp.message_handler(Text(equals="restart"))
+async def restart(message: types.Message):
+    await message.answer("Привет, я крипто бот\n" + "Введи команду" + " /help" + ", чтобы получить информацию о доступных командах!", reply_markup=types.ReplyKeyboardRemove())
 
 
-    def help(self, update, context):
-        """
-        Обработка команды "help"
-        """
-        chat = update.effective_chat
-        context.bot.send_message(chat_id=chat.id, text="Список доступных команд:\n" + 
-                                                        "/btc" + " - полная статистика по BTC\n" +
-                                                        "/stat" + " + название токена - полная статистика по введенному токену\n" +
-                                                        "/support" + " - техническая поддержка бота\n" +
-                                                        "/help" + " - список доступных команд")
+@dp.message_handler(commands="help")
+async def help(message: types.Message):
+    """
+    Обработка команды "help"
+    """
 
-    
-    def support(self, update, context):
-        """
-        Обработка команды "support"
-        """
-        chat = update.effective_chat
-        context.bot.send_message(chat_id=chat.id, text="Поддержка: " + "\n@Borntowarn" + "\n@danyaalok")
+    buttons = [
+        types.InlineKeyboardButton(text="/btc"),
+        types.InlineKeyboardButton(text="/support"),
+        types.InlineKeyboardButton(text="/help")
+    ]
+    keyboard = types.InlineKeyboardMarkup(row_width=1)
+    keyboard.add(*buttons)
 
-
-    def btc(self, update, context):
-        """
-        Обработка команды получения данных по BTC
-        """
-        chat = update.effective_chat
-        prices = cmc.get_price_change(cmc(), 'btc', '1h, 24h')
-
-        link = prices['BTC']['link']
-        USD = prices['BTC']['price']['USD']['price']
-        h_1 = prices['BTC']['price']['USD']['changes']['1h']
-        h_24 = prices['BTC']['price']['USD']['changes']['24h']
-        volumes = cmc.get_volume(cmc(), 'btc')
-        volume = volumes['BTC']['volume']
-        changes = volumes['BTC']['changes']
-
-        context.bot.send_message(chat_id=chat.id, text="Bitcoin | BTC" + '\n\n' + "Link: " + str(link) + "\n\nUSD: $" + str(USD) + 
-        "\n\nPrice change:" + "\n1h: " + str(h_1) + "%" + "\n24h: " + str(h_24) + "%" + "\nMarket Cap: $" + str(volume) + "\n24h Volume: $" + str(changes))
+    await message.answer("Список доступных команд:\n" + 
+                        "/btc" + " - полная статистика по BTC\n" +
+                        "/stat" + " + название токена - полная статистика по введенному токену\n" +
+                        "/support" + " - техническая поддержка бота\n" +
+                        "/help" + " - список доступных команд", reply_markup=keyboard)
 
 
-    def stat(self, update, context):
-        """
-        Обработка команды получения данных по введенному токену
-        """
-        chat = update.effective_chat
-        try:
-            symb = (' '.join(context.args)).upper()
-            prices = cmc.get_price_change(cmc(), symb, '1h, 24h')
+@dp.message_handler(commands="support")
+async def support(message: types.Message):
+    """
+    Обработка команды "support"
+    """
+    await message.answer("Поддержка: " + "\n@Borntowarn" + "\n@danyaalok")
 
-            link = prices[symb]['link']
-            USD = prices[symb]['price']['USD']['price']
-            h_1 = prices[symb]['price']['USD']['changes']['1h']
-            h_24 = prices[symb]['price']['USD']['changes']['24h']
-            volumes = cmc.get_volume(cmc(), symb)
-            volume = volumes[symb]['volume']
-            changes = volumes[symb]['changes']
-            name = volumes[symb]['name']
-            full_name = name + " | " + symb
 
-            context.bot.send_message(chat_id=chat.id, text= full_name + '\n\n' + "Link: " + str(link) + "\n\nUSD: $" + str(USD) + 
+@dp.message_handler(commands="btc")
+async def btc(message: types.Message):
+    """
+    Обработка команды получения данных по BTC
+    """
+    prices = cmc.get_price_change(cmc(), 'btc', '1h, 24h')
+
+    link = prices['BTC']['link']
+    USD = prices['BTC']['price']['USD']['price']
+    h_1 = prices['BTC']['price']['USD']['changes']['1h']
+    h_24 = prices['BTC']['price']['USD']['changes']['24h']
+    volumes = cmc.get_volume(cmc(), 'btc')
+    volume = volumes['BTC']['volume']
+    changes = volumes['BTC']['changes']
+
+    await message.answer("Bitcoin | BTC" + '\n\n' + "Link: " + str(link) + "\n\nUSD: $" + str(USD) + 
             "\n\nPrice change:" + "\n1h: " + str(h_1) + "%" + "\n24h: " + str(h_24) + "%" + "\nMarket Cap: $" + str(volume) + "\n24h Volume: $" + str(changes))
-        except:
-            context.bot.send_message(chat_id=chat.id, text="Я не понимаю Ваш запрос, попробуйте снова!")
 
 
-a = Bot()
+@dp.message_handler(commands="stat")
+async def stat(message: types.Message):
+    """
+    Обработка команды получения данных по введенному токену
+    """
+    try:
+        symb = (message.get_args()).upper()
+        prices = cmc.get_price_change(cmc(), symb, '1h, 24h')
+
+        link = prices[symb]['link']
+        USD = prices[symb]['price']['USD']['price']
+        h_1 = prices[symb]['price']['USD']['changes']['1h']
+        h_24 = prices[symb]['price']['USD']['changes']['24h']
+        volumes = cmc.get_volume(cmc(), symb)
+        volume = volumes[symb]['volume']
+        changes = volumes[symb]['changes']
+        name = volumes[symb]['name']
+        full_name = name + " | " + symb
+
+        await message.answer(full_name + '\n\n' + "Link: " + str(link) + "\n\nUSD: $" + str(USD) + 
+                "\n\nPrice change:" + "\n1h: " + str(h_1) + "%" + "\n24h: " + str(h_24) + "%" + "\nMarket Cap: $" + str(volume) + "\n24h Volume: $" + str(changes))
+    except:
+        await message.answer("Я не понимаю Ваш запрос, попробуйте снова!")
+
+
+if __name__ == "__main__":
+    # Запуск бота
+    executor.start_polling(dp, skip_updates=True)
