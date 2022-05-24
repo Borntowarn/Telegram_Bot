@@ -104,7 +104,10 @@ async def stat(message: types.Message):
     except:
         await message.answer("Я не понимаю Ваш запрос, попробуйте снова!")
 
-
+if __name__ == "__main__":
+    # Запуск бота
+    executor.start_polling(dp, skip_updates=True)
+    
 if __name__ == "__main__":
     # Запуск бота
     executor.start_polling(dp, skip_updates=True)
