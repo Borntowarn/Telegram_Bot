@@ -11,10 +11,10 @@ import logging
 """_summary_
 """
 
-tok = '5175481555:AAEp0UQJs1nWZxFQonsFvHDktGfHPZewwq0'
 bot = Bot(token = '5175481555:AAEp0UQJs1nWZxFQonsFvHDktGfHPZewwq0')
 dp = Dispatcher(bot)
 logging.basicConfig(level=logging.INFO)
+
 
 @dp.message_handler(commands="start")
 async def start(message: types.Message):
@@ -29,7 +29,7 @@ async def start(message: types.Message):
 
 @dp.message_handler(Text(equals="restart"))
 async def restart(message: types.Message):
-    await message.answer("Привет, я крипто бот\n" + "Введи команду" + " /help" + ", чтобы получить информацию о доступных командах!", reply_markup=types.ReplyKeyboardRemove())
+    await message.answer("Привет, я крипто бот\n" + "Введи команду" + " /help" + ", чтобы получить информацию о доступных командах!")
 
 
 @dp.message_handler(commands="help")
@@ -39,9 +39,9 @@ async def help(message: types.Message):
     """
 
     buttons = [
-        types.InlineKeyboardButton(text="/btc"),
-        types.InlineKeyboardButton(text="/support"),
-        types.InlineKeyboardButton(text="/help")
+        types.InlineKeyboardButton(text="/btc", callback_data="btc"),
+        types.InlineKeyboardButton(text="/support", callback_data="support"),
+        types.InlineKeyboardButton(text="/help", callback_data="help")
     ]
     keyboard = types.InlineKeyboardMarkup(row_width=1)
     keyboard.add(*buttons)
@@ -53,12 +53,43 @@ async def help(message: types.Message):
                         "/help" + " - список доступных команд", reply_markup=keyboard)
 
 
+@dp.callback_query_handler(text="help")
+async def send_help(call: types.CallbackQuery):
+    """
+    Обработка кнопки "help"
+    """
+    buttons = [
+        types.InlineKeyboardButton(text="/btc", callback_data="btc"),
+        types.InlineKeyboardButton(text="/support", callback_data="support"),
+        types.InlineKeyboardButton(text="/help", callback_data="help")
+    ]
+    keyboard = types.InlineKeyboardMarkup(row_width=1)
+    keyboard.add(*buttons)
+
+    await message.answer("Список доступных команд:\n" + 
+                        "/btc" + " - полная статистика по BTC\n" +
+                        "/stat" + " + название токена - полная статистика по введенному токену\n" +
+                        "/support" + " - техническая поддержка бота\n" +
+                        "/help" + " - список доступных команд", reply_markup=keyboard)
+
+
+@dp.callback_query_handler(text="support")
+async def send_support(call: types.CallbackQuery):
+    """
+    Обработка кнопки "support"
+    """
+    await call.message.answer(support())
+
+
 @dp.message_handler(commands="support")
 async def support(message: types.Message):
     """
     Обработка команды "support"
     """
-    await message.answer("Поддержка: " + "\n@Borntowarn" + "\n@danyaalok")
+    await message.answer(support())
+
+
+def support(): return("Поддержка: " + "\n@Borntowarn" + "\n@danyaalok")
 
 
 @dp.message_handler(commands="btc")
@@ -66,6 +97,18 @@ async def btc(message: types.Message):
     """
     Обработка команды получения данных по BTC
     """
+    await message.answer(btc())
+
+
+@dp.callback_query_handler(text="btc")
+async def send_btc(call: types.CallbackQuery):
+    """
+    Обработка кнопки "btc"
+    """
+    await call.message.answer(btc())
+
+
+def btc():
     prices = cmc.get_price_change(cmc(), 'btc', '1h, 24h')
 
     link = prices['BTC']['link']
@@ -76,8 +119,7 @@ async def btc(message: types.Message):
     volume = volumes['BTC']['volume']
     changes = volumes['BTC']['changes']
 
-    await message.answer("Bitcoin | BTC" + '\n\n' + "Link: " + str(link) + "\n\nUSD: $" + str(USD) + 
-            "\n\nPrice change:" + "\n1h: " + str(h_1) + "%" + "\n24h: " + str(h_24) + "%" + "\nMarket Cap: $" + str(volume) + "\n24h Volume: $" + str(changes))
+    return("Bitcoin | BTC" + '\n\n' + "Link: " + str(link) + "\n\nUSD: $" + str(USD) + "\n\nPrice change:" + "\n1h: " + str(h_1) + "%" + "\n24h: " + str(h_24) + "%" + "\nMarket Cap: $" + str(volume) + "\n24h Volume: $" + str(changes))
 
 
 @dp.message_handler(commands="stat")
@@ -87,27 +129,26 @@ async def stat(message: types.Message):
     """
     try:
         symb = (message.get_args()).upper()
-        prices = cmc.get_price_change(cmc(), symb, '1h, 24h')
-
-        link = prices[symb]['link']
-        USD = prices[symb]['price']['USD']['price']
-        h_1 = prices[symb]['price']['USD']['changes']['1h']
-        h_24 = prices[symb]['price']['USD']['changes']['24h']
-        volumes = cmc.get_volume(cmc(), symb)
-        volume = volumes[symb]['volume']
-        changes = volumes[symb]['changes']
-        name = volumes[symb]['name']
-        full_name = name + " | " + symb
-
-        await message.answer(full_name + '\n\n' + "Link: " + str(link) + "\n\nUSD: $" + str(USD) + 
-                "\n\nPrice change:" + "\n1h: " + str(h_1) + "%" + "\n24h: " + str(h_24) + "%" + "\nMarket Cap: $" + str(volume) + "\n24h Volume: $" + str(changes))
+        await message.answer(stat(symb))
     except:
         await message.answer("Я не понимаю Ваш запрос, попробуйте снова!")
 
-if __name__ == "__main__":
-    # Запуск бота
-    executor.start_polling(dp, skip_updates=True)
-    
+
+def stat(symb):
+    prices = cmc.get_price_change(cmc(), symb, '1h, 24h')
+
+    link = prices[symb]['link']
+    USD = prices[symb]['price']['USD']['price']
+    h_1 = prices[symb]['price']['USD']['changes']['1h']
+    h_24 = prices[symb]['price']['USD']['changes']['24h']
+    volumes = cmc.get_volume(cmc(), symb)
+    volume = volumes[symb]['volume']
+    changes = volumes[symb]['changes']
+    name = volumes[symb]['name']
+    full_name = name + " | " + symb
+    return(full_name + '\n\n' + "Link: " + str(link) + "\n\nUSD: $" + str(USD) + "\n\nPrice change:" + "\n1h: " + str(h_1) + "%" + "\n24h: " + str(h_24) + "%" + "\nMarket Cap: $" + str(volume) + "\n24h Volume: $" + str(changes))
+
+
 if __name__ == "__main__":
     # Запуск бота
     executor.start_polling(dp, skip_updates=True)
