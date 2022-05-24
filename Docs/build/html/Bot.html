@@ -71,34 +71,34 @@
   <section id="module-Bot.Bot">
 <span id="interaction-with-telegram-bot"></span><h1><span class="section-number">1. </span>Interaction with Telegram bot<a class="headerlink" href="#module-Bot.Bot" title="Ссылка на этот заголовок"></a></h1>
 <p>This module contains an object that represents a Telegram Bot.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="Bot.Bot.Bot">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Bot.Bot.</span></span><span class="sig-name descname"><span class="pre">Bot</span></span><a class="headerlink" href="#Bot.Bot.Bot" title="Ссылка на это определение"></a></dt>
-<dd><p>_summary_</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="Bot.Bot.Bot.help">
-<span class="sig-name descname"><span class="pre">help</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bot.Bot.Bot.help" title="Ссылка на это определение"></a></dt>
-<dd><p>Обработка команды «Help»</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="Bot.Bot.Bot.id">
-<span class="sig-name descname"><span class="pre">id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bot.Bot.Bot.id" title="Ссылка на это определение"></a></dt>
-<dd><p>Обработка команды получения id криптовалюты</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="Bot.Bot.Bot.start">
-<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bot.Bot.Bot.start" title="Ссылка на это определение"></a></dt>
-<dd><p>Обработка кнопки «Старт» в чате с ботом</p>
-</dd></dl>
-
+<dl class="py function">
+<dt class="sig sig-object py" id="Bot.Bot.help">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Bot.Bot.</span></span><span class="sig-name descname"><span class="pre">help</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">aiogram.types.message.Message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bot.Bot.help" title="Ссылка на это определение"></a></dt>
+<dd><p>Обработка команды «help»</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="Bot.Bot.b">
-<span class="sig-prename descclassname"><span class="pre">Bot.Bot.</span></span><span class="sig-name descname"><span class="pre">b</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Bot.Bot.b" title="Ссылка на это определение"></a></dt>
-<dd><p>_summary_</p>
+<dt class="sig sig-object py" id="Bot.Bot.send_btc">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Bot.Bot.</span></span><span class="sig-name descname"><span class="pre">send_btc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">call</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">aiogram.types.callback_query.CallbackQuery</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bot.Bot.send_btc" title="Ссылка на это определение"></a></dt>
+<dd><p>Обработка кнопки «btc»</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Bot.Bot.send_help">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Bot.Bot.</span></span><span class="sig-name descname"><span class="pre">send_help</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">call</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">aiogram.types.callback_query.CallbackQuery</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bot.Bot.send_help" title="Ссылка на это определение"></a></dt>
+<dd><p>Обработка кнопки «help»</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Bot.Bot.send_support">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Bot.Bot.</span></span><span class="sig-name descname"><span class="pre">send_support</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">call</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">aiogram.types.callback_query.CallbackQuery</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bot.Bot.send_support" title="Ссылка на это определение"></a></dt>
+<dd><p>Обработка кнопки «support»</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Bot.Bot.start">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Bot.Bot.</span></span><span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">aiogram.types.message.Message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bot.Bot.start" title="Ссылка на это определение"></a></dt>
+<dd><p>Обработка кнопки «start» в чате с ботом</p>
 </dd></dl>
 
 </section>

@@ -22,7 +22,6 @@ Contents:
 
    Bot
    CMC_interact
-   BSCScan_interact
 
 ==================
 
