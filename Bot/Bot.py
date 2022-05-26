@@ -6,7 +6,7 @@ from aiogram.dispatcher.filters import Text
 import logging
 
 
-"""_summary_
+"""Класс, отвечающий за работу непосредственно бота
 """
 
 bot = Bot(token = '5175481555:AAEp0UQJs1nWZxFQonsFvHDktGfHPZewwq0')
