@@ -1,6 +1,6 @@
 """This module contains an object that represents a Telegram Bot."""
 
-from .CMC_interact import CMC_API as cmc
+from CMC_interact import CMC_API
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.dispatcher.filters import Text
 import logging
@@ -12,6 +12,7 @@ import logging
 bot = Bot(token = '5175481555:AAEp0UQJs1nWZxFQonsFvHDktGfHPZewwq0')
 dp = Dispatcher(bot)
 logging.basicConfig(level=logging.INFO)
+cmc = CMC_API()
 
 
 @dp.message_handler(commands="start")
@@ -107,13 +108,13 @@ async def send_btc(call: types.CallbackQuery):
 
 
 def btc():
-    prices = cmc.get_price_change(cmc(), 'btc', '1h, 24h')
+    prices = cmc.get_price_change('btc', '1h, 24h')
 
     link = prices['BTC']['link']
     USD = prices['BTC']['price']['USD']['price']
     h_1 = prices['BTC']['price']['USD']['changes']['1h']
     h_24 = prices['BTC']['price']['USD']['changes']['24h']
-    volumes = cmc.get_volume(cmc(), 'btc')
+    volumes = cmc.get_volume('btc')
     volume = volumes['BTC']['volume']
     changes = volumes['BTC']['changes']
 
@@ -133,13 +134,13 @@ async def stat(message: types.Message):
 
 
 def stat(symb):
-    prices = cmc.get_price_change(cmc(), symb, '1h, 24h')
+    prices = cmc.get_price_change(symb, '1h, 24h')
 
     link = prices[symb]['link']
     USD = prices[symb]['price']['USD']['price']
     h_1 = prices[symb]['price']['USD']['changes']['1h']
     h_24 = prices[symb]['price']['USD']['changes']['24h']
-    volumes = cmc.get_volume(cmc(), symb)
+    volumes = cmc.get_volume(symb)
     volume = volumes[symb]['volume']
     changes = volumes[symb]['changes']
     name = volumes[symb]['name']
