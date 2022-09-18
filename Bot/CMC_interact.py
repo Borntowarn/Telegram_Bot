@@ -43,7 +43,7 @@ class CMC_API:
                 self.SYM_to_ID[item['symbol']] = item['id']
 
 
-    def get_price_change(self, symbols, period='1h', convert='USD'):
+    def get_price_change(self, symbols : str, period='1h', convert='USD'):
         """
         Method returns price changings for a setted period
 
@@ -106,7 +106,7 @@ class CMC_API:
         return prices
     
     
-    def get_market_pairs(self, symbols):
+    def get_market_pairs(self, symbols : str):
         """
         Method returns CMC number of market pairs for setted cryptocurrencies
 
@@ -143,7 +143,7 @@ class CMC_API:
         return pairs
         
      
-    def get_CMC_rank(self, symbols):
+    def get_CMC_rank(self, symbols : str):
         """
         Method returns CMC ranks for setted cryptocurrencies
 
@@ -180,7 +180,7 @@ class CMC_API:
         return ranks
        
     
-    def get_volume(self, symbols):
+    def get_volume(self, symbols : str):
         """
         Method returns value and changings for a setted period
 
@@ -220,7 +220,7 @@ class CMC_API:
         return volumes
         
         
-    def get_stat(self, symbols, convert='USD'):
+    def get_stat(self, symbols : str, convert='USD'):
         """
         Function returns full statistics for needed cryptocurrencies
 
@@ -262,7 +262,7 @@ class CMC_API:
         return data
 
     
-    def get_CMC_id(self, symbols):
+    def get_CMC_id(self, symbols : str):
         """
         Method returns CMC's ids for symbols of currencies
 
@@ -277,3 +277,4 @@ class CMC_API:
         symbols = [i.strip().upper() for i in symbols.split(',')]
         ids = [str(self.SYM_to_ID[i]) for i in symbols]
         return ','.join(ids)
+    
