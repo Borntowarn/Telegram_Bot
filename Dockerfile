@@ -7,6 +7,7 @@ COPY requirements.txt .
 # установка зависимостей
 RUN pip install -r requirements.txt
 # копирование содержимого локальной директории src в рабочую директорию
-COPY Bot/ .
+COPY Bot/ ./Bot
+COPY start.py .
 # команда, выполняемая при запуске контейнера
-CMD [ "python", "./Bot.py" ]
+CMD [ "python", "./start.py" ]
