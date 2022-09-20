@@ -20,7 +20,7 @@ Contents:
    :maxdepth: 2
    :numbered:
 
-   Bot
+   start
    CMC_interact
 
 ==================
