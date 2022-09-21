@@ -277,4 +277,3 @@ class CMC_API:
         symbols = [i.strip().upper() for i in symbols.split(',')]
         ids = [str(self.SYM_to_ID[i]) for i in symbols]
         return ','.join(ids)
-    
