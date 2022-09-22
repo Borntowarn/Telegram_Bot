@@ -18,7 +18,15 @@ class TestCMC(unittest.TestCase):
 
 
     def test_getprice_EU(self):
-        self.assertEqual(self.cmc.get_price_change('Eth', '30d', 'EU'), {'ETH': {'link': 'https://coinmarketcap.com/currencies/ethereum', 'name': 'Ethereum', 'price': {{'price': 1349.2915199204488, 'changes': {'30d': -1.24466457}}}}})
+        self.assertEqual(self.cmc.get_price_change('Eth', '30d', 'EU'), {
+            'ETH': {
+                'link': 'https://coinmarketcap.com/currencies/ethereum', 
+                'name': 'Ethereum', 
+                'price': {
+                    {'price': 1349.2915199204488, 
+                     'changes': {'30d': -1.24466457}}
+                }
+            }})
 
 
 if __name__ == "__main__":
